@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
@@ -45,10 +46,18 @@
     "webpack-cli": "^4.2.0",
     "webpack-config-single-spa-react": "^2.0.0-beta.1",
     "webpack-dev-server": "^4.0.0-beta.0",
-    "webpack-merge": "^5.4.0"
+    "webpack-merge": "^5.4.0",
+    "less": "^4.1.1",
+    "less-loader": "^8.0.0",
   },
   "dependencies": {
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "@loadable/component": "^5.14.1",
+    "antd": "^4.12.2",
+    "axios": "^0.21.1",
+    "echarts": "^5.0.1",
+    "moment": "^2.29.1"
   }
 }

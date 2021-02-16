@@ -1,5 +1,7 @@
-const { merge }  = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react<% if (typescript) { %>-ts<% } %>");
+const path = require("path");
+const externals = require('./externals');
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
@@ -8,8 +10,55 @@ module.exports = (webpackConfigEnv, argv) => {
     webpackConfigEnv,
     argv,
   });
-
+  const standalone = Boolean(webpackConfigEnv.standalone);
   return merge(defaultConfig, {
-    // modify the webpack config however you'd like to by adding to this object
-  });
+    entry: standalone ? './src/index.tsx' : './src/<%= orgName %>-<%= projectName %>.tsx',
+    module: {
+      rules: [
+        {
+          test: /\.less$/,
+          exclude: /\.module\.less$/,
+          include: [/src/],
+          use: [
+            {
+              loader: require.resolve("style-loader"),
+            },
+            {
+              loader: require.resolve("css-loader"),
+              options: {
+                modules: false
+              }
+            },
+            {
+              loader: require.resolve("less-loader")
+            }
+          ]
+        },
+        {
+          test: /\.module\.less$/,
+          include: [/src/],
+          use: [
+            {
+              loader: require.resolve("style-loader"),
+            },
+            {
+              loader: require.resolve("css-loader"),
+              options: {
+                modules: { localIdentName: `[${defaultConfig.output.uniqueName}][path][name][hash:base64:5]` },
+              },
+            },
+            {
+              loader: require.resolve("less-loader")
+            }
+          ]
+        }
+      ]
+    },
+    resolve: {
+      alias: {
+        '@src': path.resolve(__dirname, './src')
+      }
+    },
+    externals: standalone ? [] : externals
+  })
 };
