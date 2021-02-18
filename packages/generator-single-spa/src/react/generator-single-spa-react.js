@@ -158,6 +158,11 @@ module.exports = class SingleSpaReactGenerator extends Generator {
       this.options
     );
     this.fs.copyTpl(
+      this.templatePath("externals.js"),
+      this.destinationPath(`externals.js`),
+      this.options
+    );
+    this.fs.copyTpl(
       // lib启动的入口
       this.templatePath("src/main.js"),
       this.destinationPath(
